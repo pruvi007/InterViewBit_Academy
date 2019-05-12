@@ -20,7 +20,9 @@ ll pow_2(ll a,ll b)
 
 }
 
-// if we are dividing in  more parts, dont think that time complexity is decreasing.. (constant operations are increasing.. so time would remain almost similar.)
+/* if we are dividing in  more parts, dont think that time complexity is decreasing.. 
+(constant operations are increasing.. so time would remain almost similar.) */
+
 ll pow_3(ll a,ll b)
 {
 	if(b==0)
