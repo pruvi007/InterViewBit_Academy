@@ -45,54 +45,7 @@ int paths1(int n,int m,int i,int j,int zeros,int hops)
 	}
 	return sum;
 }
-int paths2(int n,int m,int i,int j,int zeros,int hops)
-{
-	if(a[i][j] == 2)
-	{
-		return hops==zeros+1?1:0;
 
-	}
-	static int sum = 0;
-	if(isSafe(n,m,i,j-1) && vis[i][j-1]==0)
-	{
-		vis[i][j-1] = 1;
-		sum += paths1(n,m,i,j-1,zeros,hops+1);
-		vis[i][j-1] = 0; 
-	}
-	// return sum;
-}
-int paths3(int n,int m,int i,int j,int zeros,int hops)
-{
-	if(a[i][j] == 2)
-	{
-		return hops==zeros+1?1:0;
-
-	}
-	static int sum = 0;
-	if(isSafe(n,m,i+1,j) && vis[i+1][j]==0)
-	{
-		vis[i+1][j] = 1;
-		sum += paths1(n,m,i+1,j,zeros,hops+1);
-		vis[i+1][j] = 0; 
-	}
-	// return sum;
-}
-int paths4(int n,int m,int i,int j,int zeros,int hops)
-{
-	if(a[i][j] == 2)
-	{
-		return hops==zeros+1?1:0;
-
-	}
-	static int sum = 0;
-	if(isSafe(n,m,i-1,j) && vis[i-1][j]==0)
-	{
-		vis[i-1][j] = 1;
-		sum += paths1(n,m,i-1,j,zeros,hops+1);
-		vis[i-1][j] = 0; 
-	}
-	// return sum;
-}
 int main()
 {
 	int n,m;
@@ -128,13 +81,13 @@ int main()
 	int d1 = paths1(n,m,sx,sy+1,zeros,0);
 
 	vis[n][m] = {0};
-	int d2 = paths2(n,m,sx,sy,zeros,0);
+	int d2 = paths1(n,m,sx,sy,zeros,0);
 
 	vis[n][m] = {0};
-	int d3 = paths3(n,m,sx,sy,zeros,0);
+	int d3 = paths1(n,m,sx,sy,zeros,0);
 
 	vis[n][m] = {0};
-	int d4 = paths4(n,m,sx,sy,zeros,0);
+	int d4 = paths1(n,m,sx,sy,zeros,0);
 
 	cout<<d1<<endl;
 }
