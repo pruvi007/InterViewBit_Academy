@@ -3,6 +3,9 @@ using namespace std;
 
 int a[100][100];
 int vis[100][100];
+int dx[] = {-1,1,0,0};
+int dy[] = {0,0,1,-1};
+int sum = 0;
 
 int isSafe(int n,int m,int i,int j)
 {
@@ -11,39 +14,26 @@ int isSafe(int n,int m,int i,int j)
 	return 0;
 
 }
-int paths1(int n,int m,int i,int j,int zeros,int hops)
+
+void paths1(int n,int m,int i,int j,int zeros,int hops)
 {
 	if(a[i][j] == 2)
 	{
-		return hops==zeros+1?1:0;
+		sum += (hops==zeros+1?1:0);
+		return ;
 
 	}
-	static int sum = 0;
-	if(isSafe(n,m,i,j+1) && vis[i][j+1]==0)
+	vis[i][j] = 0;
+	for(int k=0;k<4;k++)
 	{
-		vis[i][j+1] = 1;
-		sum += paths1(n,m,i,j+1,zeros,hops+1);
-		vis[i][j+1] = 0; 
+		int x = i+dx[k];
+		int y = j+dy[k];
+		if(isSafe(n,m,x,y) && vis[x][y]==0)
+		{
+			paths1(n,m,x,y,zeros,hops+1);
+		}
 	}
-	else if(isSafe(n,m,i,j-1) && vis[i][j-1]==0)
-	{
-		vis[i][j-1] = 1;
-		sum += paths1(n,m,i,j-1,zeros,hops+1);
-		vis[i][j-1] = 0; 
-	}
-	else if(isSafe(n,m,i+1,j) && vis[i+1][j]==0)
-	{
-		vis[i+1][j] = 1;
-		sum += paths1(n,m,i+1,j,zeros,hops+1);
-		vis[i+1][j] = 0; 
-	}
-	else if(isSafe(n,m,i-1,j) && vis[i-1][j]==0)
-	{
-		vis[i-1][j] = 1;
-		sum += paths1(n,m,i-1,j,zeros,hops+1);
-		vis[i-1][j] = 0; 
-	}
-	return sum;
+	vis[i][j] = 1;
 }
 
 int main()
@@ -78,16 +68,7 @@ int main()
 	}
 
 	vis[n][m] = {0};
-	int d1 = paths1(n,m,sx,sy+1,zeros,0);
+	paths1(n,m,sx,sy,zeros,0);
 
-	vis[n][m] = {0};
-	int d2 = paths1(n,m,sx,sy,zeros,0);
-
-	vis[n][m] = {0};
-	int d3 = paths1(n,m,sx,sy,zeros,0);
-
-	vis[n][m] = {0};
-	int d4 = paths1(n,m,sx,sy,zeros,0);
-
-	cout<<d1<<endl;
+	cout<<sum<<endl;
 }
