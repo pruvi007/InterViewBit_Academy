@@ -21,7 +21,7 @@ ll power(ll a,ll b)
 	}
 	else
 	{
-		return (x%mod* (x%mod*a%mod)%mod)%mod;
+		return (x%mod * (x%mod*a%mod)%mod)%mod;
 	}
 }
 int main()

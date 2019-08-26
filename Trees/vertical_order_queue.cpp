@@ -16,7 +16,7 @@ vector<vector<int> > Solution::verticalOrderTraversal(TreeNode* A) {
     /*
         idea: create a queue. push root with d=0
         pop q.front and push left child with d-1 and right child with d+1
-        store the values in map<int,vector<>> 
+        store the values in map<int,vector<>> (distance -> nodes with that distance)
     */
     queue<pair<TreeNode *,int> > q;
     q.push({A,0});
