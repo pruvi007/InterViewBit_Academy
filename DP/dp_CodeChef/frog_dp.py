@@ -1,4 +1,4 @@
-n,k,p = map(int,input().split())
+in,k,p = map(int,input().split())
 a = list( map(int,input().split()) )
 frog = [ [a[i],i+1] for i in range(len(a)) ]
 frog = sorted(frog,reverse=True)
