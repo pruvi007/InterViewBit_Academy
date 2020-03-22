@@ -1,46 +1,47 @@
-/*
-	Flip The array
-	Flip the sign of some elements such that the total sum is minimum non-negative
-	my Idea: slect or not select an element
-*/
-// solution by @pruvi007
-#include<bits/stdc++.h>
-using namespace std;
+#define ll long long int
 
-
-
-int main()
+struct bag{
+    int val;
+    int item;
+   
+}dp[101][10001];
+int flip(vector<int> a)
 {
-	int n;
-	cin >> n;
-	vector<int> a;
-	int sum = 0;
+    int n = a.size();
+    ll sum = 0;
 	for(int i=0;i<n;i++)
-	{
-		int x;
-		cin >> x;
-		a.push_back(x);
 		sum += a[i];
-	}
-	sort(a.begin(),a.end());
-	vector<int> t1,t2;
-	t1.push_back(a[0]);
-	int s1=a[n-1],s2=0;
-	for(int i=n-2;i>=0;i--)
-	{
-		if(s1 > s2)
-		{
-			s2 += a[i];
-			t2.push_back(a[i]);
-		}
-		else
-		{
-			s1 += a[i];
-			t1.push_back(a[i]);
-		}
-	}
-	cout << t1.size() << " " << t2.size() << endl;
-	cout << s1 << " " << s2 << endl;
-	cout << "changes: " << min(t1.size(),t2.size()) << endl;
 
+	
+	for(int i=0;i<=sum;i++)
+	{
+		for(int j=0;j<=n;j++)
+		{
+		    if(i==0 or j==0)
+		    {
+		        dp[i][j].val = 0;
+		        dp[i][j].item = 0;
+		    }
+			if(a[j-1]<=i)
+			{
+			    int cur_val = a[j-1] + dp[i-a[j-1]][j-1].val;
+			    int cur_item = dp[i-a[j-1]][j-1].item+1;
+				if(cur_val > dp[i][j-1].val or (cur_val == dp[i][j-1].val and cur_item<dp[i][j-1].item) )
+				{
+					dp[i][j].val = cur_val;
+					dp[i][j].item = cur_item;
+				}
+				else 
+					dp[i][j] = dp[i][j-1];
+					
+			}
+			else
+				dp[i][j] = dp[i][j-1];
+		}
+	}
+	int ans = dp[sum/2][n].item;
+    return ans;
+}
+int Solution::solve(const vector<int> &A) {
+    return flip(A);
 }

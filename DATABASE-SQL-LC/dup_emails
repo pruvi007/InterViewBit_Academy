@@ -1,0 +1,22 @@
++----+---------+
+| Id | Email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+
+op - 
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+
+sol-
+
+select 
+    Email 
+from 
+    (select Email,count(Email) as c from Person group by Email) as temp 
+    where c>1 

@@ -1,0 +1,27 @@
+select 
+    MAX(salary) as SecondHighestSalary 
+from 
+    Employee 
+    where 
+    salary < (select MAX(Salary) from Employee)
+
+
+Medium
+// Nth Highest Salary
+(usage of limit -> offset and count (offset denotes the row number and then count))
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+declare M INT;
+set M=N-1;
+  RETURN (
+      select
+        distinct(salary) as getNthHighestSalary
+      from
+        Employee
+      order by
+        salary
+      DESC LIMIT M,1
+      
+  );
+END
