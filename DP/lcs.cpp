@@ -6,6 +6,35 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+// following is space optimized LCS space - (2*m)
+int commonChild(string s1, string s2) {
+    int n = s1.length();
+    int m = s2.length();
+    int dp[2][m+1];
+    bool row;
+    
+    for(int i=0;i<=n;i++)
+    {
+        row = 1&i;
+        for(int j=0;j<=m;j++)
+        {    
+            if(i==0 or j==0)
+                dp[row][j]=0;
+            else if(s1[i-1] == s2[j-1])
+            {
+                dp[row][j] = 1 + dp[1-row][j-1];
+            }
+            else
+            {
+                dp[row][j] = max(dp[row][j-1],dp[1-row][j]);
+            }
+        }
+    }
+    return dp[row][m];
+
+}
+
 map<pair<int,int>,int> m;
 int lcs(string s1,string s2,int i,int j)
 {
