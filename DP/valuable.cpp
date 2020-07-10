@@ -2,11 +2,11 @@
 using namespace std;
 #define ll long long int
 
-ll mod = 1e9 + 7;
+
 int solve( vector< vector<int> > adj,vector<int> val,int cur )
 {
-    // get the child, gchild and ggchild for the current node
-    vector<int> child,gchild,ggchild;
+    // get the child, and gchild .
+    vector<int> child,gchild;
     for(int i=0;i<adj[cur].size();i++)
         child.push_back( adj[cur][i] );
     for(int i=0;i<child.size();i++)
@@ -14,27 +14,20 @@ int solve( vector< vector<int> > adj,vector<int> val,int cur )
         for(int j=0;j<adj[child[i]].size();j++)
             gchild.push_back( adj[child[i]][j] );
     }
-    for(int i=0;i<gchild.size();i++)
-    {
-        for(int j=0;j<adj[gchild[i]].size();j++)
-            ggchild.push_back( adj[gchild[i]][j] );
-    }
+   
 
     // now cases
-    // case 1 - take current node and call on ggchild
+    // case 1 - take current node and call on gchild
     // case 2 - dont take current child and call on child
-    // case 3 - dont take any child and call on gchild
     int a = val[cur-1];
-    for(int i=0;i<ggchild.size();i++)
-        a += solve( adj,val,ggchild[i] )%mod;
+    for(int i=0;i<gchild.size();i++)
+        a += solve( adj,val,gchild[i] );
     int b = 0;
     for(int i=0;i<child.size();i++)
-        b += solve( adj,val,child[i] )%mod;
-    int c = 0;
-    for(int i=0;i<gchild.size();i++)
-        c += solve( adj,val,gchild[i] )%mod;
-    int ans = max( a,max(b,c) );
-    return ans%mod;
+        b += solve( adj,val,child[i] );
+    
+    int ans = max( a,b );
+    return ans;
 }
 int main()
 {

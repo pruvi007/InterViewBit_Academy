@@ -56,65 +56,11 @@ int doUnion(int x,int y,int par[],int size[])
 int main()
 {
     fast;
-	int n,m;
-	cin >> n >> m;
-	map<int,int> womenNum;
-	for(int i=n+1;i<=n+m;i++)
-		womenNum[i-n] = i;
-	int par[n+m+1],size[n+m+1];
-	for(int i=1;i<=n+m;i++)
-	{
-		par[i] = i;
-		size[i] = 1;
-	}
-	int q1;
-	cin >> q1;
-	for(int i=0;i<q1;i++)
-	{
-		int x,y;
-		cin >> x >> y;
-		int p = doUnion(x,y,par,size);
-	}
-	int q2;
-	cin >> q2;
-	for(int i=0;i<q2;i++)
-	{
-		int x,y;
-		cin >> x >> y;
-		x = womenNum[x];y = womenNum[y];
-		int p = doUnion(x,y,par,size);
-	}
-	int q3;
-	cin >> q3;
-	for(int i=0;i<q3;i++)
-	{
-		int x,y;
-		cin >> x >> y;
-		y = womenNum[y];
-		int p = doUnion(x,y,par,size);
-	}
-	for(int i=1;i<=n+m;i++)
-		cout << i << ": "<< par[i] << "\n";
-	cout << endl;
-	map<int,int> M,W;
-	for(int i=1;i<=n;i++)
-	{
-		int p = getPar(i,par);
-		M[p]++;
-	}
-	for(int i=n+1;i<=n+m;i++)
-	{
-		int p = getPar(i,par);
-		W[p]++;
-	}
-	int TW = 0;
-	for(auto it=W.begin();it!=W.end();it++)
-		TW += it->second;
-	ll ans = 0;
-	for(auto it=M.begin();it!=M.end();it++)
-	{
-		int p = it->first;
-		ans = ans + it->second * (TW-W[p]);
-	}
-	cout << ans << '\n';
+    int n,m;
+    cin >> n >> m;
+    int par[n+1],size[n+1];
+    for(int i=1;i<=n;i++)
+    {
+        par[i] = i;size[i]=1;
+    }
 }
