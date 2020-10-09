@@ -33,7 +33,7 @@ int find(int x,int y,int par[])
 {
     return getPar(x,par) == getPar(y,par);
 }
-int doUnion(int x,int y,int par[],int size[])
+int doUnion(int x,int y,int par[],int size[], int M[])
 {
     if( find(x,y,par) )
         return -1;
@@ -45,41 +45,47 @@ int doUnion(int x,int y,int par[],int size[])
     {
         par[p2] = p1;
         size[p1] += s2;
+        M[p1] = max( M[p1], M[p2] );
     }
     else
     {
         par[p1] = p2;
         size[p2] += s1;
+        M[p2] = max( M[p2], M[p1] );
     }
     return 1;
 }
+
 int main()
 {
     fast;
     int n,m;
     cin >> n >> m;
-    int par[n+1],size[n+1];
+    int par[n+1], size[n+1],M[n+1];
     for(int i=1;i<=n;i++)
     {
-        par[i] = i;size[i]=1;
+        par[i] = i;
+        size[i] = 1;
+        M[i] = i;
     }
-    vector<vector<int> > v;
     for(int i=0;i<m;i++)
     {
         int x,y;
         cin >> x >> y;
-        v.PB(vector<int>{x,y});
+        int p = doUnion(x,y,par,size,M);
     }
-    Vi ans;
-    for(int i=m-1;i>=0;i--)
+    int q;
+    cin >> q;
+    while(q--)
     {
-        int x = v[i][0];
-        int y = v[i][1];
-        int pos = doUnion(x,y,par,size);
-        if(pos==-1)
-            ans.PB(i+1);
+        int x,y;
+        cin >> x >> y;
+        int power1 = M[ getPar(x,par) ];
+        int power2 = M[ getPar(y,par) ];
+        if( power1>power2 )
+            cout << x << '\n';
+        else if( power1 < power2 )
+            cout << y << '\n';
+        else cout << "TIE\n";
     }
-    cout << ans.size() << '\n';
-    for(int i=ans.size()-1;i>=0;i--)
-        cout << ans[i] << '\n';
 }

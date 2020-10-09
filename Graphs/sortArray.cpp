@@ -1,10 +1,4 @@
-/*
-    handle - pruvi007
-    questionName - 
-    Contest - 
-    Topic - 
-    Platform - 
-*/
+
 #include<bits/stdc++.h>
 using namespace std;
 #define ll          long long int
@@ -56,30 +50,39 @@ int doUnion(int x,int y,int par[],int size[])
 int main()
 {
     fast;
-    int n,m;
-    cin >> n >> m;
-    int par[n+1],size[n+1];
-    for(int i=1;i<=n;i++)
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for(int i=0;i<n;i++)
+        cin >> a[i];
+    string s;
+    cin >> s;
+    int par[n+1], size[n+1];
+    for(int i=0;i<=n;i++)
     {
-        par[i] = i;size[i]=1;
+        par[i] = i;
+        size[i] = 1;
     }
-    vector<vector<int> > v;
-    for(int i=0;i<m;i++)
+    for(int i=0;i<s.length();i++)
     {
-        int x,y;
-        cin >> x >> y;
-        v.PB(vector<int>{x,y});
+        if(s[i]=='1')
+        {
+            int x = doUnion(i+1,i+2,par,size);
+        }
     }
-    Vi ans;
-    for(int i=m-1;i>=0;i--)
+    bool possible = true;
+    for(int i=0;i<n;i++)
     {
-        int x = v[i][0];
-        int y = v[i][1];
-        int pos = doUnion(x,y,par,size);
-        if(pos==-1)
-            ans.PB(i+1);
+        if(a[i]!=i+1)
+        {
+            if(find(a[i],i+1,par)==false )
+            {
+                possible = false;
+                break;
+            }
+        }
     }
-    cout << ans.size() << '\n';
-    for(int i=ans.size()-1;i>=0;i--)
-        cout << ans[i] << '\n';
+    if(possible)
+        cout << "YES\n";
+    else cout << "NO\n";
 }

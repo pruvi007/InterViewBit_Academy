@@ -33,7 +33,7 @@ int find(int x,int y,int par[])
 {
     return getPar(x,par) == getPar(y,par);
 }
-int doUnion(int x,int y,int par[],int size[])
+int doUnion(int x,int y,int par[],int size[], int m[])
 {
     if( find(x,y,par) )
         return -1;
@@ -45,41 +45,42 @@ int doUnion(int x,int y,int par[],int size[])
     {
         par[p2] = p1;
         size[p1] += s2;
+        m[p1] = min( m[p1],m[p2] );
     }
     else
     {
         par[p1] = p2;
         size[p2] += s1;
+        m[p2] = min( m[p1],m[p2] );
     }
     return 1;
 }
+
 int main()
 {
     fast;
-    int n,m;
-    cin >> n >> m;
-    int par[n+1],size[n+1];
-    for(int i=1;i<=n;i++)
+    string a,b,c;
+    cin >> a >> b >> c;
+    int par[26],size[26],m[26];
+    for(int i=0;i<26;i++)
     {
-        par[i] = i;size[i]=1;
+        par[i] = i;
+        size[i] = 1;
+        m[i] = i;
     }
-    vector<vector<int> > v;
-    for(int i=0;i<m;i++)
+    for(int i=0;i<a.length();i++)
     {
-        int x,y;
-        cin >> x >> y;
-        v.PB(vector<int>{x,y});
+        int x = a[i]%97;
+        int y = b[i]%97;
+        int pos = doUnion(x,y,par,size,m);
     }
-    Vi ans;
-    for(int i=m-1;i>=0;i--)
+    for(int i=0;i<c.length();i++)
     {
-        int x = v[i][0];
-        int y = v[i][1];
-        int pos = doUnion(x,y,par,size);
-        if(pos==-1)
-            ans.PB(i+1);
+        char curCh = c[i];
+        char minEquivalent = char(97+m[ getPar(c[i]%97,par) ]);
+        char ans = min(curCh,minEquivalent);
+        
+        c[i] = ans;
     }
-    cout << ans.size() << '\n';
-    for(int i=ans.size()-1;i>=0;i--)
-        cout << ans[i] << '\n';
+    cout << c << '\n';
 }

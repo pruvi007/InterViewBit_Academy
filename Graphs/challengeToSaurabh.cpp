@@ -23,7 +23,6 @@ int dx[] = {1,-1,0,0};
 int dy[] = {0,0,-1,1};
 int DX[] = {0,-1,-1,-1,0,1,1,1};
 int DY[] = {-1,-1,0,1,1,1,0,-1};
-
 int getPar(int x,int par[]){
     while(x!=par[x])
         x = par[x];
@@ -59,27 +58,22 @@ int main()
     int n,m;
     cin >> n >> m;
     int par[n+1],size[n+1];
-    for(int i=1;i<=n;i++)
-    {
-        par[i] = i;size[i]=1;
+    for(int i=1;i<=n;i++){
+        par[i] = i;
+        size[i] = 1;
     }
-    vector<vector<int> > v;
+    bool cycle = false;
     for(int i=0;i<m;i++)
     {
         int x,y;
         cin >> x >> y;
-        v.PB(vector<int>{x,y});
-    }
-    Vi ans;
-    for(int i=m-1;i>=0;i--)
-    {
-        int x = v[i][0];
-        int y = v[i][1];
         int pos = doUnion(x,y,par,size);
         if(pos==-1)
-            ans.PB(i+1);
+            cycle = true;
     }
-    cout << ans.size() << '\n';
-    for(int i=ans.size()-1;i>=0;i--)
-        cout << ans[i] << '\n';
+    map<int,int> mp;
+    for(int i=1;i<=n;i++)
+        mp[ getPar(i,par) ]++;
+    if(cycle and n>=3 and mp.size()==1) cout << "YES\n";
+    else cout << "NO\n";
 }
